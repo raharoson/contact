@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8eae69b7-4d27-4443-b280-42f983316c09" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Views/contact/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/contact/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Views/user/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Views/user/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/02/028593fd7c0b5bfa9c4526f425c4b2650af5ec1a3f6bdf59e999c4e3e6ed56ae.php" beforeDir="false" afterPath="$PROJECT_DIR$/cache/02/028593fd7c0b5bfa9c4526f425c4b2650af5ec1a3f6bdf59e999c4e3e6ed56ae.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/35/35404969188350ce7084780a8ec8ec2589a997ee32160e408d4283fbeca53c7a.php" beforeDir="false" afterPath="$PROJECT_DIR$/cache/35/35404969188350ce7084780a8ec8ec2589a997ee32160e408d4283fbeca53c7a.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache/42/42ee67c5405618449685e8fe20ff6e78b2716b97f9bf5b9a7b685e8e78561935.php" beforeDir="false" afterPath="$PROJECT_DIR$/cache/42/42ee67c5405618449685e8fe20ff6e78b2716b97f9bf5b9a7b685e8e78561935.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,8 +50,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Views/user/login.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+            <state relative-caret-position="375">
+              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
             </state>
           </provider>
         </entry>
@@ -209,66 +204,7 @@
             <path>
               <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
               <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Views" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
               <item name="cache" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="cache" type="462c0819:PsiDirectoryNode" />
-              <item name="02" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="cache" type="462c0819:PsiDirectoryNode" />
-              <item name="7b" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="cache" type="462c0819:PsiDirectoryNode" />
-              <item name="35" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="cache" type="462c0819:PsiDirectoryNode" />
-              <item name="42" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="cache" type="462c0819:PsiDirectoryNode" />
-              <item name="43" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="cache" type="462c0819:PsiDirectoryNode" />
-              <item name="d0" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="poo.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="poo.com" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -331,16 +267,15 @@
       <workItem from="1548783295997" duration="10711000" />
       <workItem from="1548839416742" duration="39590000" />
       <workItem from="1548914010562" duration="102798000" />
-      <workItem from="1549121490507" duration="1606000" />
+      <workItem from="1549121490507" duration="2942000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="330684000" />
+    <option name="totallyTimeSpent" value="332020000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2090909" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -755,8 +690,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Views/user/login.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        <state relative-caret-position="375">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
     </entry>
