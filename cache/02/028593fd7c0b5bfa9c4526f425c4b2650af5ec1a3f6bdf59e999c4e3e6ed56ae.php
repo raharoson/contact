@@ -114,6 +114,7 @@ class __TwigTemplate_ca72f9d291edd955e6f06622a79b5217b31bc22560272cb13e15be84f60
 
             //Soumettre la formulaire
             \$(\"#form-create-contact\").on(\"submit\", function(e){
+                \$(this).validate();
                 var postData = \$(this).serializeArray();
                 var formUrl = \$(this).attr(\"action\");
                 \$.ajax({
@@ -138,9 +139,15 @@ class __TwigTemplate_ca72f9d291edd955e6f06622a79b5217b31bc22560272cb13e15be84f60
                 contact_name : \"required\",
                 contact_prenom: \"required\",
                 contact_adresse: \"required\"
+            },
+            messages:{
+                contact_name: \"Veuillez entrer un nom\",
+                contact_prenom: \"Veuillez entrer un prénom\",
+                contact_adresse: \"Veuillez entrer un adresse email\",
+
             }
         });
-        
+
     </script>
 
 ";
@@ -245,6 +252,7 @@ class __TwigTemplate_ca72f9d291edd955e6f06622a79b5217b31bc22560272cb13e15be84f60
 
             //Soumettre la formulaire
             \$(\"#form-create-contact\").on(\"submit\", function(e){
+                \$(this).validate();
                 var postData = \$(this).serializeArray();
                 var formUrl = \$(this).attr(\"action\");
                 \$.ajax({
@@ -269,9 +277,15 @@ class __TwigTemplate_ca72f9d291edd955e6f06622a79b5217b31bc22560272cb13e15be84f60
                 contact_name : \"required\",
                 contact_prenom: \"required\",
                 contact_adresse: \"required\"
+            },
+            messages:{
+                contact_name: \"Veuillez entrer un nom\",
+                contact_prenom: \"Veuillez entrer un prénom\",
+                contact_adresse: \"Veuillez entrer un adresse email\",
+
             }
         });
-        
+
     </script>
 
 {% endblock %}", "contact/create.html.twig", "/home/raharoson/PROJET/php/poo.com/app/Views/contact/create.html.twig");

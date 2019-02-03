@@ -10,7 +10,7 @@
                         <a href="#" class="btn btn-primary btn-sm btn-add-contact" data-toggle="modal" data-target="#myModal">Nouvelle adresse</a>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="index.php?p=contact.update">
+                        <form id="form-create-contact" method="post" action="index.php?p=contact.update">
                             <div class='form-group'>
                                 <label>Nom</label>
                                 <input type="text" class="form-control" id="contact_nom" name="nom" value="{{ contact.nom }}" required>
@@ -34,7 +34,7 @@
                                 <div class="col-sm-8"></div>
                                 <div class="col-sm-4">
                                     <a href="index.php?p=contact.list" class="btn btn-info add-new"><i class="fa fa-plus"></i>Annuler</a>
-                                    <button type="submit" class="btn btn-info add-new"><i class="fa fa-plus"></i>Enregister</button>
+                                    <a href="#" class="btn btn-info add-new" id="btn-submit-form-contact"><i class="fa fa-plus"></i>Enregister</a>
                                 </div>
                             </div>
                         </form>
@@ -77,23 +77,23 @@
                                                     <input type="hidden" class="form-control" name="id" value="{{ adresse.id }}">
                                                     <div class='form-group'>
                                                         <label>Adresse</label>
-                                                        <input type="text" class="form-control input-uppercase" name="numrue" value="{{ adresse.numrue }}" required>
+                                                        <input type="text" class="form-control input-uppercase" id="adresse_numrue" name="numrue" value="{{ adresse.numrue }}" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Code postal</label>
-                                                        <input type="text" class="form-control" name="codepostal" value="{{ adresse.codepostal }}" required>
+                                                        <input type="text" class="form-control" id="adresse_codepostal" name="codepostal" value="{{ adresse.codepostal }}" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Ville</label>
-                                                        <input type="text" class="form-control input-uppercase" name="ville" value="{{ adresse.ville }}" required>
+                                                        <input type="text" class="form-control input-uppercase" id="adresse_ville" name="ville" value="{{ adresse.ville }}" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Pays</label>
-                                                        <input type="text" class="form-control input-uppercase" name="pays" value="{{ adresse.pays }}" required>
+                                                        <input type="text" class="form-control input-uppercase" id="adresse_pays" name="pays" value="{{ adresse.pays }}" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Telephone</label>
-                                                        <input type="text" class="form-control" name="telephone" value="{{ adresse.telephone }}" required>
+                                                        <input type="text" class="form-control" name="telephone" id="adresse_telephone" value="{{ adresse.telephone }}" required>
                                                     </div>
                                                 </form>
                                             </div>
@@ -131,23 +131,23 @@
                                     <input type="hidden" class="form-control" name="contactid" value="{{ contact.id }}">
                                     <div class='form-group'>
                                         <label>Adresse</label>
-                                        <input type="text" class="form-control input-uppercase" name="numrue" required>
+                                        <input type="text" class="form-control input-uppercase" id="adresse_numrue" name="numrue" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Code postal</label>
-                                        <input type="text" class="form-control" name="codepostal" required>
+                                        <input type="text" class="form-control" id="adresse_codepostal" name="codepostal" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Ville</label>
-                                        <input type="text" class="form-control input-uppercase" name="ville" required>
+                                        <input type="text" class="form-control input-uppercase" id="adresse_ville" name="ville" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Pays</label>
-                                        <input type="text" class="form-control input-uppercase" name="pays" required>
+                                        <input type="text" class="form-control input-uppercase" id="adresse_pays" name="pays" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Telephone</label>
-                                        <input type="text" class="form-control" name="telephone" required>
+                                        <input type="text" class="form-control" id="adresse_telephone" name="telephone" required>
                                     </div>
                                 </form>
                             </div>
@@ -187,11 +187,67 @@
                 e.preventDefault();
             });
 
+            //Verifier si le nom de contact est palindrome
+            $("#btn-submit-form-contact").on("click", function(e){
+                $.ajax({
+                    url: "index.php?p=contact.checkpalindrome",
+                    type: "POST",
+                    data: {nom: $("#contact_nom").val()},
+                    success: function(data, textStatus, jqXHR){
+                        if(data.code_status == 0){
+                            alert(data.message);
+                            $("#contact_nom").css('color', 'red');
+                            return false;
+                        } else {
+                            $("#contact_email").css('color', 'black');
+                            $.ajax({
+                                url: "{{ urlrest }}" + "?email=" + $("#contact_email").val(),
+                                type: "GET",
+                                success: function(data, textStatus, jqXHR){
+                                    if(data.code_status == 0){
+                                        alert(data.message);
+                                        $("#contact_email").css('color', 'red');
+                                        return false;
+                                    } else {
+                                        $("#form-create-contact").submit();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+                e.preventDefault();
+            });
+
+            //Soumettre la formulaire modification contact
+            $("#form-create-contact").on("submit", function(e){
+                $(this).validate();
+
+                var postData = $(this).serializeArray();
+                var formUrl = $(this).attr("action");
+                $.ajax({
+                    url: formUrl,
+                    type: "POST",
+                    data: postData,
+                    success: function(data, textStatus, jqXHR){
+                        window.location.href = "index.php?p=contact.list";
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(status + ": " + error);
+                    }
+                });
+                e.preventDefault();
+            });
+
             //Modifier une adresse existante
             $(".form-adresse").each(function(){
                 $(this).on("submit", function(e){
+
+                    $(this).validate();
+
                     var postData = $(this).serializeArray();
                     var formUrl = $(this).attr("action");
+
                     $.ajax({
                        url: formUrl,
                        type: "POST",
@@ -203,6 +259,18 @@
                            console.log(status + ": " + error);
                        }
                     });
+
+                    $(this).validate({
+                        rules: {
+                            adresse_numrue : "required",
+                            adresse_codepostal: "required",
+                            adresse_ville: "required",
+                            adresse_pays: "required",
+                            adresse_telephone: "required"
+
+                        }
+                    });
+
                     e.preventDefault();
                 });
             });
@@ -216,6 +284,7 @@
 
             //Ajouter une nouvelle adresse
             $("#form-new-adresse").on("submit", function(e){
+                    $("#form-new-adresse").validate();
                     var postData = $(this).serializeArray();
                     var formUrl = $(this).attr("action");
 
@@ -233,12 +302,23 @@
                     e.preventDefault();
                 });
 
-
             $("#btn-add-adresse").on('click', function(){
                 $("#form-new-adresse").submit();
             });
 
 
-        })
+        });
+
+        $("#form-new-adresse").validate({
+            rules: {
+                adresse_numrue : "required",
+                adresse_codepostal: "required",
+                adresse_ville: "required",
+                adresse_pays: "required",
+                adresse_telephone: "required"
+
+            }
+        });
+
     </script>
 {% endblock %}

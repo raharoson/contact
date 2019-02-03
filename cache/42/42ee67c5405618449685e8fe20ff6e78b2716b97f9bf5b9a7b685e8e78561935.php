@@ -37,7 +37,7 @@ class __TwigTemplate_b88bbe3148d92b443fcee2fb2947fb5bba56940a56caf51fe75770df636
         // line 5
         if (($context["failed"] ?? null)) {
             // line 6
-            echo "    <div class=\"alert alert-danger\">Identifiant ou mot de passe incorrect!</div>';
+            echo "    <div class=\"alert alert-danger\">Identifiant ou mot de passe incorrect!</div>
     ";
         }
         // line 8
@@ -85,7 +85,7 @@ class __TwigTemplate_b88bbe3148d92b443fcee2fb2947fb5bba56940a56caf51fe75770df636
 {% block body %}
 
     {% if failed %}
-    <div class=\"alert alert-danger\">Identifiant ou mot de passe incorrect!</div>';
+    <div class=\"alert alert-danger\">Identifiant ou mot de passe incorrect!</div>
     {% endif %}
 
     <div class=\"card\">

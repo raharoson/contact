@@ -41,7 +41,7 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                         <a href=\"#\" class=\"btn btn-primary btn-sm btn-add-contact\" data-toggle=\"modal\" data-target=\"#myModal\">Nouvelle adresse</a>
                     </div>
                     <div class=\"card-body\">
-                        <form method=\"post\" action=\"index.php?p=contact.update\">
+                        <form id=\"form-create-contact\" method=\"post\" action=\"index.php?p=contact.update\">
                             <div class='form-group'>
                                 <label>Nom</label>
                                 <input type=\"text\" class=\"form-control\" id=\"contact_nom\" name=\"nom\" value=\"";
@@ -74,7 +74,7 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                                 <div class=\"col-sm-8\"></div>
                                 <div class=\"col-sm-4\">
                                     <a href=\"index.php?p=contact.list\" class=\"btn btn-info add-new\"><i class=\"fa fa-plus\"></i>Annuler</a>
-                                    <button type=\"submit\" class=\"btn btn-info add-new\"><i class=\"fa fa-plus\"></i>Enregister</button>
+                                    <a href=\"#\" class=\"btn btn-info add-new\" id=\"btn-submit-form-contact\"><i class=\"fa fa-plus\"></i>Enregister</a>
                                 </div>
                             </div>
                         </form>
@@ -158,35 +158,35 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
             echo "\">
                                                     <div class='form-group'>
                                                         <label>Adresse</label>
-                                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"numrue\" value=\"";
+                                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_numrue\" name=\"numrue\" value=\"";
             // line 80
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["adresse"], "numrue", []), "html", null, true);
             echo "\" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Code postal</label>
-                                                        <input type=\"text\" class=\"form-control\" name=\"codepostal\" value=\"";
+                                                        <input type=\"text\" class=\"form-control\" id=\"adresse_codepostal\" name=\"codepostal\" value=\"";
             // line 84
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["adresse"], "codepostal", []), "html", null, true);
             echo "\" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Ville</label>
-                                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"ville\" value=\"";
+                                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_ville\" name=\"ville\" value=\"";
             // line 88
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["adresse"], "ville", []), "html", null, true);
             echo "\" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Pays</label>
-                                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"pays\" value=\"";
+                                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_pays\" name=\"pays\" value=\"";
             // line 92
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["adresse"], "pays", []), "html", null, true);
             echo "\" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Telephone</label>
-                                                        <input type=\"text\" class=\"form-control\" name=\"telephone\" value=\"";
+                                                        <input type=\"text\" class=\"form-control\" name=\"telephone\" id=\"adresse_telephone\" value=\"";
             // line 96
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["adresse"], "telephone", []), "html", null, true);
             echo "\" required>
@@ -241,23 +241,23 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
         echo "\">
                                     <div class='form-group'>
                                         <label>Adresse</label>
-                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"numrue\" required>
+                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_numrue\" name=\"numrue\" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Code postal</label>
-                                        <input type=\"text\" class=\"form-control\" name=\"codepostal\" required>
+                                        <input type=\"text\" class=\"form-control\" id=\"adresse_codepostal\" name=\"codepostal\" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Ville</label>
-                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"ville\" required>
+                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_ville\" name=\"ville\" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Pays</label>
-                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"pays\" required>
+                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_pays\" name=\"pays\" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Telephone</label>
-                                        <input type=\"text\" class=\"form-control\" name=\"telephone\" required>
+                                        <input type=\"text\" class=\"form-control\" id=\"adresse_telephone\" name=\"telephone\" required>
                                     </div>
                                 </form>
                             </div>
@@ -300,11 +300,70 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                 e.preventDefault();
             });
 
-            //Modifier une adresse existante
+            //Verifier si le nom de contact est palindrome
+            \$(\"#btn-submit-form-contact\").on(\"click\", function(e){
+                \$.ajax({
+                    url: \"index.php?p=contact.checkpalindrome\",
+                    type: \"POST\",
+                    data: {nom: \$(\"#contact_nom\").val()},
+                    success: function(data, textStatus, jqXHR){
+                        if(data.code_status == 0){
+                            alert(data.message);
+                            \$(\"#contact_nom\").css('color', 'red');
+                            return false;
+                        } else {
+                            \$(\"#contact_email\").css('color', 'black');
+                            \$.ajax({
+                                url: \"";
+        // line 204
+        echo twig_escape_filter($this->env, ($context["urlrest"] ?? null), "html", null, true);
+        echo "\" + \"?email=\" + \$(\"#contact_email\").val(),
+                                type: \"GET\",
+                                success: function(data, textStatus, jqXHR){
+                                    if(data.code_status == 0){
+                                        alert(data.message);
+                                        \$(\"#contact_email\").css('color', 'red');
+                                        return false;
+                                    } else {
+                                        \$(\"#form-create-contact\").submit();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+                e.preventDefault();
+            });
+
+            //Soumettre la formulaire modification contact
+            \$(\"#form-create-contact\").on(\"submit\", function(e){
+                \$(this).validate();
+
+                var postData = \$(this).serializeArray();
+                var formUrl = \$(this).attr(\"action\");
+                \$.ajax({
+                    url: formUrl,
+                    type: \"POST\",
+                    data: postData,
+                    success: function(data, textStatus, jqXHR){
+                        window.location.href = \"index.php?p=contact.list\";
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(status + \": \" + error);
+                    }
+                });
+                e.preventDefault();
+            });
+
+            //Modifier un adresse existante
             \$(\".form-adresse\").each(function(){
                 \$(this).on(\"submit\", function(e){
+
+                    \$(this).validate();
+
                     var postData = \$(this).serializeArray();
                     var formUrl = \$(this).attr(\"action\");
+
                     \$.ajax({
                        url: formUrl,
                        type: \"POST\",
@@ -316,6 +375,18 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                            console.log(status + \": \" + error);
                        }
                     });
+
+                    \$(this).validate({
+                        rules: {
+                            adresse_numrue : \"required\",
+                            adresse_codepostal: \"required\",
+                            adresse_ville: \"required\",
+                            adresse_pays: \"required\",
+                            adresse_telephone: \"required\"
+
+                        }
+                    });
+
                     e.preventDefault();
                 });
             });
@@ -329,6 +400,7 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
 
             //Ajouter une nouvelle adresse
             \$(\"#form-new-adresse\").on(\"submit\", function(e){
+                    \$(\"#form-new-adresse\").validate();
                     var postData = \$(this).serializeArray();
                     var formUrl = \$(this).attr(\"action\");
 
@@ -352,7 +424,20 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
             });
 
 
-        })
+        });
+
+
+        \$(\"#form-new-adresse\").validate({
+            rules: {
+                adresse_numrue : \"required\",
+                adresse_codepostal: \"required\",
+                adresse_ville: \"required\",
+                adresse_pays: \"required\",
+                adresse_telephone: \"required\"
+
+            }
+        });
+
     </script>
 ";
     }
@@ -369,7 +454,7 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
 
     public function getDebugInfo()
     {
-        return array (  287 => 175,  240 => 131,  224 => 117,  218 => 116,  216 => 115,  202 => 104,  191 => 96,  184 => 92,  177 => 88,  170 => 84,  163 => 80,  157 => 77,  151 => 76,  142 => 70,  133 => 64,  126 => 60,  120 => 57,  116 => 56,  110 => 55,  106 => 54,  98 => 49,  94 => 47,  89 => 46,  87 => 45,  65 => 26,  56 => 20,  49 => 16,  35 => 4,  32 => 3,  15 => 1,);
+        return array (  319 => 204,  287 => 175,  240 => 131,  224 => 117,  218 => 116,  216 => 115,  202 => 104,  191 => 96,  184 => 92,  177 => 88,  170 => 84,  163 => 80,  157 => 77,  151 => 76,  142 => 70,  133 => 64,  126 => 60,  120 => 57,  116 => 56,  110 => 55,  106 => 54,  98 => 49,  94 => 47,  89 => 46,  87 => 45,  65 => 26,  56 => 20,  49 => 16,  35 => 4,  32 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -386,7 +471,7 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                         <a href=\"#\" class=\"btn btn-primary btn-sm btn-add-contact\" data-toggle=\"modal\" data-target=\"#myModal\">Nouvelle adresse</a>
                     </div>
                     <div class=\"card-body\">
-                        <form method=\"post\" action=\"index.php?p=contact.update\">
+                        <form id=\"form-create-contact\" method=\"post\" action=\"index.php?p=contact.update\">
                             <div class='form-group'>
                                 <label>Nom</label>
                                 <input type=\"text\" class=\"form-control\" id=\"contact_nom\" name=\"nom\" value=\"{{ contact.nom }}\" required>
@@ -410,7 +495,7 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                                 <div class=\"col-sm-8\"></div>
                                 <div class=\"col-sm-4\">
                                     <a href=\"index.php?p=contact.list\" class=\"btn btn-info add-new\"><i class=\"fa fa-plus\"></i>Annuler</a>
-                                    <button type=\"submit\" class=\"btn btn-info add-new\"><i class=\"fa fa-plus\"></i>Enregister</button>
+                                    <a href=\"#\" class=\"btn btn-info add-new\" id=\"btn-submit-form-contact\"><i class=\"fa fa-plus\"></i>Enregister</a>
                                 </div>
                             </div>
                         </form>
@@ -453,23 +538,23 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                                                     <input type=\"hidden\" class=\"form-control\" name=\"id\" value=\"{{ adresse.id }}\">
                                                     <div class='form-group'>
                                                         <label>Adresse</label>
-                                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"numrue\" value=\"{{ adresse.numrue }}\" required>
+                                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_numrue\" name=\"numrue\" value=\"{{ adresse.numrue }}\" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Code postal</label>
-                                                        <input type=\"text\" class=\"form-control\" name=\"codepostal\" value=\"{{ adresse.codepostal }}\" required>
+                                                        <input type=\"text\" class=\"form-control\" id=\"adresse_codepostal\" name=\"codepostal\" value=\"{{ adresse.codepostal }}\" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Ville</label>
-                                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"ville\" value=\"{{ adresse.ville }}\" required>
+                                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_ville\" name=\"ville\" value=\"{{ adresse.ville }}\" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Pays</label>
-                                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"pays\" value=\"{{ adresse.pays }}\" required>
+                                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_pays\" name=\"pays\" value=\"{{ adresse.pays }}\" required>
                                                     </div>
                                                     <div class='form-group'>
                                                         <label>Telephone</label>
-                                                        <input type=\"text\" class=\"form-control\" name=\"telephone\" value=\"{{ adresse.telephone }}\" required>
+                                                        <input type=\"text\" class=\"form-control\" name=\"telephone\" id=\"adresse_telephone\" value=\"{{ adresse.telephone }}\" required>
                                                     </div>
                                                 </form>
                                             </div>
@@ -507,23 +592,23 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                                     <input type=\"hidden\" class=\"form-control\" name=\"contactid\" value=\"{{ contact.id }}\">
                                     <div class='form-group'>
                                         <label>Adresse</label>
-                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"numrue\" required>
+                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_numrue\" name=\"numrue\" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Code postal</label>
-                                        <input type=\"text\" class=\"form-control\" name=\"codepostal\" required>
+                                        <input type=\"text\" class=\"form-control\" id=\"adresse_codepostal\" name=\"codepostal\" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Ville</label>
-                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"ville\" required>
+                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_ville\" name=\"ville\" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Pays</label>
-                                        <input type=\"text\" class=\"form-control input-uppercase\" name=\"pays\" required>
+                                        <input type=\"text\" class=\"form-control input-uppercase\" id=\"adresse_pays\" name=\"pays\" required>
                                     </div>
                                     <div class='form-group'>
                                         <label>Telephone</label>
-                                        <input type=\"text\" class=\"form-control\" name=\"telephone\" required>
+                                        <input type=\"text\" class=\"form-control\" id=\"adresse_telephone\" name=\"telephone\" required>
                                     </div>
                                 </form>
                             </div>
@@ -563,11 +648,67 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                 e.preventDefault();
             });
 
-            //Modifier une adresse existante
+            //Verifier si le nom de contact est palindrome
+            \$(\"#btn-submit-form-contact\").on(\"click\", function(e){
+                \$.ajax({
+                    url: \"index.php?p=contact.checkpalindrome\",
+                    type: \"POST\",
+                    data: {nom: \$(\"#contact_nom\").val()},
+                    success: function(data, textStatus, jqXHR){
+                        if(data.code_status == 0){
+                            alert(data.message);
+                            \$(\"#contact_nom\").css('color', 'red');
+                            return false;
+                        } else {
+                            \$(\"#contact_email\").css('color', 'black');
+                            \$.ajax({
+                                url: \"{{ urlrest }}\" + \"?email=\" + \$(\"#contact_email\").val(),
+                                type: \"GET\",
+                                success: function(data, textStatus, jqXHR){
+                                    if(data.code_status == 0){
+                                        alert(data.message);
+                                        \$(\"#contact_email\").css('color', 'red');
+                                        return false;
+                                    } else {
+                                        \$(\"#form-create-contact\").submit();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+                e.preventDefault();
+            });
+
+            //Soumettre la formulaire modification contact
+            \$(\"#form-create-contact\").on(\"submit\", function(e){
+                \$(this).validate();
+
+                var postData = \$(this).serializeArray();
+                var formUrl = \$(this).attr(\"action\");
+                \$.ajax({
+                    url: formUrl,
+                    type: \"POST\",
+                    data: postData,
+                    success: function(data, textStatus, jqXHR){
+                        window.location.href = \"index.php?p=contact.list\";
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(status + \": \" + error);
+                    }
+                });
+                e.preventDefault();
+            });
+
+            //Modifier un adresse existante
             \$(\".form-adresse\").each(function(){
                 \$(this).on(\"submit\", function(e){
+
+                    \$(this).validate();
+
                     var postData = \$(this).serializeArray();
                     var formUrl = \$(this).attr(\"action\");
+
                     \$.ajax({
                        url: formUrl,
                        type: \"POST\",
@@ -579,6 +720,18 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
                            console.log(status + \": \" + error);
                        }
                     });
+
+                    \$(this).validate({
+                        rules: {
+                            adresse_numrue : \"required\",
+                            adresse_codepostal: \"required\",
+                            adresse_ville: \"required\",
+                            adresse_pays: \"required\",
+                            adresse_telephone: \"required\"
+
+                        }
+                    });
+
                     e.preventDefault();
                 });
             });
@@ -592,6 +745,7 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
 
             //Ajouter une nouvelle adresse
             \$(\"#form-new-adresse\").on(\"submit\", function(e){
+                    \$(\"#form-new-adresse\").validate();
                     var postData = \$(this).serializeArray();
                     var formUrl = \$(this).attr(\"action\");
 
@@ -615,7 +769,20 @@ class __TwigTemplate_af5f32bc8ef87cad2cd36de73bae3b3dc9a789944e86705ce4d186d82c5
             });
 
 
-        })
+        });
+
+
+        \$(\"#form-new-adresse\").validate({
+            rules: {
+                adresse_numrue : \"required\",
+                adresse_codepostal: \"required\",
+                adresse_ville: \"required\",
+                adresse_pays: \"required\",
+                adresse_telephone: \"required\"
+
+            }
+        });
+
     </script>
 {% endblock %}", "contact/edit.html.twig", "/home/raharoson/PROJET/php/poo.com/app/Views/contact/edit.html.twig");
     }
